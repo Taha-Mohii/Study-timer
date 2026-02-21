@@ -1,0 +1,245 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0f0f13;
+  --card-bg: #1a1a24;
+  --card-top: #1e1e2a;
+  --accent: #e8c96d;
+  --text: #f0ece0;
+  --muted: #5a5870;
+  --sep: #0a0a0e;
+  --glow: rgba(232,201,109,0.18);
+  --radius: clamp(6px, 1.5vw, 12px);
+
+  /* fluid sizing — scales across all screen sizes */
+  --card-w:    clamp(60px, 18vw, 120px);
+  --card-h:    clamp(78px, 23vw, 155px);
+  --digit:     clamp(2.8rem, 10vw, 6rem);
+  --colon:     clamp(1.6rem, 5.5vw, 3.8rem);
+  --ctrl-size: clamp(20px, 5vw, 30px);
+  --ctrl-font: clamp(0.4rem, 1.4vw, 0.68rem);
+  --btn-px:    clamp(14px, 5vw, 36px);
+  --btn-font:  clamp(0.62rem, 2vw, 0.78rem);
+  --gap:       clamp(6px, 2.5vw, 28px);
+  --unit-gap:  clamp(4px, 1.5vw, 12px);
+}
+
+body {
+  background: var(--bg);
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Nunito', sans-serif;
+  user-select: none;
+  overflow: hidden;
+  padding: 16px;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, #1c1830 0%, #0f0f13 100%);
+  z-index: -1;
+}
+
+h1 {
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  color: var(--muted);
+  font-size: clamp(0.52rem, 1.8vw, 0.72rem);
+  text-transform: uppercase;
+  margin-bottom: clamp(22px, 6vw, 52px);
+}
+
+/* ── Timer row ─────────────────────── */
+.timer-row {
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+}
+
+.unit-group {
+  display: flex;
+  align-items: center;
+  gap: var(--unit-gap);
+}
+
+/* ── Flip card ─────────────────────── */
+.flip-unit {
+  position: relative;
+  width: var(--card-w);
+  height: var(--card-h);
+  perspective: 800px;
+  flex-shrink: 0;
+}
+
+.card-face {
+  width: 100%;
+  height: 100%;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: var(--digit);
+  color: var(--text);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+.card-face::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  height: 2px;
+  background: var(--sep);
+  z-index: 10;
+}
+
+.card-face::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.03) 50%, rgba(0,0,0,0.15) 50%);
+  pointer-events: none;
+}
+
+/* ── Flip overlay ──────────────────── */
+.flip-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  overflow: hidden;
+  transform-origin: bottom center;
+  border-radius: var(--radius) var(--radius) 0 0;
+  z-index: 5;
+  backface-visibility: hidden;
+}
+
+.flip-top .inner {
+  width: 100%;
+  height: 200%;
+  background: var(--card-top);
+  border-radius: var(--radius) var(--radius) 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: var(--digit);
+  color: var(--text);
+}
+
+.flip-top.animate {
+  animation: flipTop 0.28s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+
+@keyframes flipTop {
+  0%   { transform: rotateX(0deg); }
+  100% { transform: rotateX(-90deg); }
+}
+
+/* ── Colon ─────────────────────────── */
+.colon {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: var(--colon);
+  color: var(--accent);
+  opacity: 0.8;
+  padding-bottom: 0.12em;
+  flex-shrink: 0;
+}
+
+/* ── Up/Down buttons ───────────────── */
+.ctrl-col {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3px, 1vw, 7px);
+}
+
+.ctrl-btn {
+  width: var(--ctrl-size);
+  height: var(--ctrl-size);
+  background: #1e1e2c;
+  border: 1px solid #2e2e42;
+  border-radius: clamp(4px, 1vw, 7px);
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--ctrl-font);
+  transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.1s;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.ctrl-btn:hover  { background: var(--accent); color: #111; border-color: var(--accent); }
+.ctrl-btn:active { transform: scale(0.88); }
+
+/* ── Label ─────────────────────────── */
+.label {
+  text-align: center;
+  font-size: clamp(0.45rem, 1.3vw, 0.62rem);
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-top: clamp(5px, 1.5vw, 13px);
+}
+
+.sec-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── Bottom controls ───────────────── */
+.controls {
+  display: flex;
+  gap: clamp(8px, 3vw, 16px);
+  margin-top: clamp(26px, 7vw, 56px);
+}
+
+.btn {
+  padding: clamp(8px, 2vw, 11px) var(--btn-px);
+  border-radius: 50px;
+  border: 1.5px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  font-size: var(--btn-font);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.btn:hover  { background: var(--accent); color: #111; }
+.btn.active { background: var(--accent); color: #111; }
+
+.btn.reset { border-color: #2e2e42; color: var(--muted); }
+.btn.reset:hover { border-color: #555; color: #aaa; background: transparent; }
+
+/* Glow when running */
+.running .flip-unit .card-face {
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 30px var(--glow), inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+/* ── Status ────────────────────────── */
+.status {
+  margin-top: clamp(10px, 3vw, 20px);
+  font-size: clamp(0.48rem, 1.5vw, 0.62rem);
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--muted);
+  height: clamp(12px, 3vw, 16px);
+  transition: color 0.3s;
+}
+.status.done { color: var(--accent); }

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studying Flip Timer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Nunito:wght@300;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<h1>Study Timer</h1>
+
+<div class="timer-row" id="timerRow">
+
+  <!-- hours -->
+  <div class="unit-group">
+    <div>
+      <div class="flip-unit" id="hourUnit">
+        <div class="card-face" id="hourCard">00</div>
+        <div class="flip-top" id="hourFlip"><div class="inner" id="hourFlipInner">00</div></div>
+      </div>
+      <div class="label">hours</div>
+    </div>
+    <div class="ctrl-col">
+      <button class="ctrl-btn" onclick="adjustUnit('hour', 1)">▲</button>
+      <button class="ctrl-btn" onclick="adjustUnit('hour', -1)">▼</button>
+    </div>
+  </div>
+
+  <div class="colon">:</div>
+
+  <!-- minutes -->
+  <div class="unit-group">
+    <div>
+      <div class="flip-unit" id="minUnit">
+        <div class="card-face" id="minCard">00</div>
+        <div class="flip-top" id="minFlip"><div class="inner" id="minFlipInner">00</div></div>
+      </div>
+      <div class="label">minutes</div>
+    </div>
+    <div class="ctrl-col">
+      <button class="ctrl-btn" onclick="adjustUnit('min', 1)">▲</button>
+      <button class="ctrl-btn" onclick="adjustUnit('min', -1)">▼</button>
+    </div>
+  </div>
+
+  <div class="colon">:</div>
+
+  <!-- seconds -->
+  <div class="sec-wrap">
+    <div class="flip-unit" id="secUnit">
+      <div class="card-face" id="secCard">00</div>
+      <div class="flip-top" id="secFlip"><div class="inner" id="secFlipInner">00</div></div>
+    </div>
+    <div class="label">seconds</div>
+  </div>
+
+</div>
+
+<div class="status" id="status"></div>
+
+<div class="controls">
+  <button class="btn" id="startBtn" onclick="toggleTimer()">Start</button>
+  <button class="btn reset" onclick="resetTimer()">Reset</button>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
